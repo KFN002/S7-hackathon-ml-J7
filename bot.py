@@ -1,32 +1,30 @@
 import torch
 import telebot
 from telebot import types
+from credentials import bot_token
 from database import Database
 from models.wing_inspection import WingInspectionModel
 from models.engine_inspection import EngineInspectionModel
 from file_handler import handle_uploaded_file
 from question_handler import ask_question, handle_selected_document, handle_text
 
-# Загрузим модели
 wing_model = WingInspectionModel()
 engine_model = EngineInspectionModel()
-wing_model.load_state_dict(torch.load("models/wing_model.pth", map_location=torch.device('cpu')))
-engine_model.load_state_dict(torch.load("models/engine_model.pth", map_location=torch.device('cpu')))
 wing_model.eval()
 engine_model.eval()
 
-TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+TOKEN = bot_token
 bot = telebot.TeleBot(TOKEN)
 
 db = Database("documents.db")
 
 def main_menu():
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.add(types.KeyboardButton("📋 Check-list Advice"))
-    keyboard.add(types.KeyboardButton("🛩️ Wing Inspection"))
-    keyboard.add(types.KeyboardButton("⚙️ Engine Inspection"))
-    keyboard.add(types.KeyboardButton("📂 Upload Documents"))
-    keyboard.add(types.KeyboardButton("🔎 Ask a Question"))
+    keyboard.add(types.KeyboardButton("📋 Совет по чек-листам"))
+    keyboard.add(types.KeyboardButton("🛩️ Инспекция крыла"))
+    keyboard.add(types.KeyboardButton("⚙️ Инспекция агрегатов"))
+    keyboard.add(types.KeyboardButton("📂 Загрузка документов"))
+    keyboard.add(types.KeyboardButton("🔎 Задать вопрос"))
     return keyboard
 
 @bot.message_handler(commands=['start'])
@@ -37,7 +35,7 @@ def start_message(message):
 def handle_document(message):
     handle_uploaded_file(message, bot, db)
 
-@bot.message_handler(func=lambda message: message.text == "🔎 Ask a Question")
+@bot.message_handler(func=lambda message: message.text == "🔎 Задать вопрос")
 def ask_question_handler(message):
     ask_question(message, bot, db)
 
