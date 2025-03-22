@@ -1,11 +1,17 @@
 import openai
+from document_parser import processor
+
 
 OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"
 
-def get_checklist_advice(question):
+def get_advice_from_docs(question):
+    full_text = "\n".join(processor.documents.values())
     response = openai.ChatCompletion.create(
         model="gpt-4",
-        messages=[{"role": "system", "content": "Ты помощник для авиационных инженеров."},
-                  {"role": "user", "content": question}]
+        messages=[
+            {"role": "system", "content": "Ты помощник, анализирующий документы."},
+            {"role": "user", "content": f"Документы: {full_text}"},
+            {"role": "user", "content": f"Вопрос: {question}"}
+        ]
     )
     return response["choices"][0]["message"]["content"]
