@@ -1,7 +1,6 @@
 from telebot import types
-from chat_assistant import get_advice_from_docs
-from document_parser import processor
-import openai
+from Tech.chat_assistant import get_advice_from_docs
+from Tech.document_parser import processor
 
 
 def ask_question(message, bot, db):

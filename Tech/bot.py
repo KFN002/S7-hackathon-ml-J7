@@ -1,10 +1,9 @@
-import torch
 import telebot
 from telebot import types
 from credentials import bot_token
 from database import Database
-from models.wing_inspection import WingInspectionModel
-from models.engine_inspection import EngineInspectionModel
+from Tech.models.wing_inspection import WingInspectionModel
+from Tech.models.engine_inspection import EngineInspectionModel
 from file_handler import handle_uploaded_file
 from question_handler import ask_question, handle_selected_document, handle_text
 
