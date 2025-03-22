@@ -1,8 +1,9 @@
 import openai
+from credentials import chatgpt_token
 from document_parser import processor
 
 
-OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"
+OPENAI_API_KEY = chatgpt_token
 
 def get_advice_from_docs(question):
     full_text = "\n".join(processor.documents.values())
