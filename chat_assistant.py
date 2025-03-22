@@ -10,7 +10,7 @@ def get_advice_from_docs(question):
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "Ты помощник, анализирующий документы."},
+            {"role": "system", "content": "Ты помощник, анализирующий документы и помогающий пилотам и инженерами, не проси больше информации и тд."},
             {"role": "user", "content": f"Документы: {full_text}"},
             {"role": "user", "content": f"Вопрос: {question}"}
         ]
