@@ -10,7 +10,7 @@ class Database:
     def _create_table(self):
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS documents (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 file_id TEXT UNIQUE,
                 file_name TEXT,
                 file_path TEXT

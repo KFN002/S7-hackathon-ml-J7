@@ -1,14 +1,14 @@
 import openai
-from credentials import chatgpt_token
+from credentials import openai_api_key
 from document_parser import processor
 
 
-OPENAI_API_KEY = chatgpt_token
+openai.api_key = openai_api_key
 
 def get_advice_from_docs(question):
     full_text = "\n".join(processor.documents.values())
     response = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "Ты помощник, анализирующий документы и помогающий пилотам и инженерами,"
                                           " не проси больше информации и тд."},

@@ -2,7 +2,6 @@ from telebot import types
 from Tech.chat_assistant import get_advice_from_docs
 from Tech.document_parser import processor
 
-
 def ask_question(message, bot, db):
     files = db.get_all_file_names()
     if not files:
@@ -13,7 +12,7 @@ def ask_question(message, bot, db):
     for file in files:
         keyboard.add(types.KeyboardButton(file))
     bot.send_message(message.chat.id, "Выберите документ для анализа:", reply_markup=keyboard)
-
+    bot.register_next_step_handler(message, handle_selected_document, bot, db)
 
 def handle_selected_document(message, bot, db):
     file_path = db.get_file_path(message.text)
@@ -24,7 +23,7 @@ def handle_selected_document(message, bot, db):
     text = processor.process_file(file_path)
     processor.documents[message.text] = text
     bot.send_message(message.chat.id, "Теперь отправьте ваш вопрос.")
-
+    bot.register_next_step_handler(message, handle_text, bot, db)
 
 def handle_text(message, bot, db):
     if processor.documents:
